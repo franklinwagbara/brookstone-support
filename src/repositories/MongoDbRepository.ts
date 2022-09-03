@@ -1,4 +1,4 @@
-import {FilterQuery, Model} from 'mongoose';
+import {FilterQuery, Model, UpdateQuery} from 'mongoose';
 import {Exception} from '../exceptions';
 import {IQuery, IRepository, IResult} from '../interfaces';
 import {normalizeQuery} from '../utils';
@@ -53,7 +53,7 @@ export class MongoDbRepository<T> implements IRepository<T> {
 
     const newData = await this._model.findOneAndUpdate(
       query as FilterQuery<T>,
-      data,
+      data as UpdateQuery<T>,
       {new: true}
     );
 

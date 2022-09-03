@@ -1,6 +1,6 @@
 import express from 'express';
 import {NextFunction} from 'express-serve-static-core';
-import {IRequest, IResponse} from '../interfaces';
+import {IRequest, IResponse, IUser} from '../interfaces';
 import {AuthenticationService} from '../services';
 import {validationMiddleware} from '../middlewares';
 
@@ -63,28 +63,47 @@ export class AuthenticationController {
     });
   };
 
-  public async register(req: IRequest, res: IResponse, next: NextFunction) {
-    const {token} = await this._authService.register(req.body);
-    this.createCookie(res, token);
+  public register = async (
+    req: IRequest,
+    res: IResponse,
+    next: NextFunction
+  ) => {
+    try {
+      const {token} = await this._authService.register(req.body as IUser);
+      this.createCookie(res, token);
 
-    //todo: flush cache after update
+      //todo: flush cache after update
 
-    return res.send({success: 'ok'});
-  }
+      return res.send({success: 'ok'});
+    } catch (error) {
+      console.error(error);
+      return next(error);
+    }
+  };
 
-  public async login(req: IRequest, res: IResponse, next: NextFunction) {
-    const {token} = await this._authService.login(req.body);
+  public login = async (req: IRequest, res: IResponse, next: NextFunction) => {
+    try {
+      const {token} = await this._authService.login(req.body);
 
-    //flush cache after update
+      //flush cache after update
 
-    return res.send({success: 'ok'});
-  }
+      return res.send({success: 'ok'});
+    } catch (error) {
+      console.error(error);
+      return next(error);
+    }
+  };
 
-  public async logout(req: IRequest, res: IResponse, next: NextFunction) {
-    res.clearCookie('access-token');
+  public logout = async (req: IRequest, res: IResponse, next: NextFunction) => {
+    try {
+      res.clearCookie('access-token');
 
-    //flush cache after update
+      //flush cache after update
 
-    return res.send({success: 'ok'});
-  }
+      return res.send({success: 'ok'});
+    } catch (error) {
+      console.error(error);
+      return next(error);
+    }
+  };
 }

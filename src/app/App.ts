@@ -1,17 +1,21 @@
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import helmet from 'helmet';
+import cors from 'cors';
 import {AuthenticationController} from '../controllers';
 import {IController, IDatabaseConnection} from '../interfaces';
-import {errorHandlingMiddleware} from '../middlewares/';
+import {
+  authenticationMiddlewware,
+  errorHandlingMiddleware,
+} from '../middlewares/';
 import {MongoDbConnection} from '../services/';
 
 export class App {
-  private readonly _app: express.Application;
-  private readonly _databaseConnection: IDatabaseConnection;
   private readonly _port: string | number;
-  private readonly _authController: AuthenticationController;
+  private readonly _app: express.Application;
   private readonly _controllers: IController<any>[];
+  private readonly _databaseConnection: IDatabaseConnection;
+  private readonly _authController: AuthenticationController;
 
   constructor(
     controllers: IController<any>[],
@@ -38,12 +42,21 @@ export class App {
 
   private initializeMiddelwares() {
     this._app.use(
+      cors({
+        origin: 'http://localhost:3000',
+        credentials: true, //access-control-allow-credentials:true
+        optionsSuccessStatus: 200,
+      })
+    );
+    this._app.use(express.json());
+    this._app.use(
       helmet({
         contentSecurityPolicy: true,
       })
     );
 
     this._app.use(cookieParser());
+    this._app.use(authenticationMiddlewware);
   }
 
   private initializeCaching() {
@@ -55,6 +68,7 @@ export class App {
   }
 
   private initializeControllers() {
+    this._app.use('/api/', this._authController.router);
     this._controllers.forEach(controller => {
       this._app.use('/api/', controller.router);
     });

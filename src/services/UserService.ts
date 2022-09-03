@@ -6,7 +6,7 @@ export class UserService implements IService<IUser> {
   private readonly _repository: IRepository<IUser>;
 
   constructor(repository?: IRepository<IUser>) {
-    this._repository = repository ?? new MongoDbRepository(UserModel);
+    this._repository = repository ?? new MongoDbRepository<IUser>(UserModel);
   }
   public async getMany(query: IQuery): Promise<IResult<IUser>> {
     return await this._repository.getMany(query);
@@ -15,7 +15,7 @@ export class UserService implements IService<IUser> {
     return await this._repository.getOne(query);
   }
   public async isExist(query: IQuery): Promise<boolean> {
-    throw new Error('Not implemented.');
+    return await this._repository.isExist(query);
   }
   public async save(data: IUser): Promise<IResult<IUser>> {
     return await this._repository.save(data);

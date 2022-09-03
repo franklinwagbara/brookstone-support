@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import _ from 'lodash';
 import {Roles} from '../constants';
-import {Exception} from '../exceptions';
+import {AuthenticationException, Exception} from '../exceptions';
 import {IQuery, IRepository, ITokenData, IUser} from '../interfaces';
 import {normalizeQuery} from '../utils';
 import {UserService} from './UserService';
@@ -19,7 +19,7 @@ export class AuthenticationService {
     const query: IQuery = normalizeQuery({email: user.email});
 
     if (await this._repository.isExist(query))
-      throw new Exception('User already exists');
+      throw new AuthenticationException();
 
     user.password = await bcrypt.hash(user.password as string, 10);
     user.role = Roles.User;
@@ -40,7 +40,7 @@ export class AuthenticationService {
     const query: IQuery = normalizeQuery({email: user.email});
 
     if (!(await this._repository.isExist(query)))
-      throw new Exception('There was an issue with your login credentials.');
+      throw new AuthenticationException();
 
     let user_from_db = (await this._repository.getOne(query)).data as IUser;
 
@@ -49,8 +49,7 @@ export class AuthenticationService {
       user_from_db.password as string
     );
 
-    if (!passwordMatch)
-      throw new Exception('There was an issue with your login credentials.');
+    if (!passwordMatch) throw new AuthenticationException();
 
     user_from_db = _.pick(user_from_db, ['username', 'email', 'role']);
     const token = webToken.signToken({data: user_from_db});
