@@ -58,7 +58,7 @@ export class UserController implements IController<IUser> {
        * @desc   creates a user
        * @access private
        */
-      .post(`${this._path}/createuser`, validationMiddleware('user'), this.save)
+      .post(`${this._path}`, validationMiddleware('user'), this.save)
 
       /**
        * @route  PUT /api/user/id
@@ -102,11 +102,11 @@ export class UserController implements IController<IUser> {
     }
   };
 
-  public async getMany(
+  public getMany = async (
     req: IRequest,
     res: IResponse,
     next: NextFunction
-  ): Promise<void | IResponse> {
+  ): Promise<void | IResponse> => {
     try {
       const query = _.pick(req.query, ['username', 'email', 'role']) as IQuery;
       const queryResult = await this._userService.getMany(query);
@@ -130,13 +130,13 @@ export class UserController implements IController<IUser> {
       console.error(error);
       next(error);
     }
-  }
+  };
 
-  public async getOne(
+  public getOne = async (
     req: IRequest,
     res: IResponse,
     next: NextFunction
-  ): Promise<void | IResponse> {
+  ): Promise<void | IResponse> => {
     try {
       const query: IQuery = {_id: req.params.id};
       const queryResult = await this._userService.getOne(query);
@@ -157,12 +157,12 @@ export class UserController implements IController<IUser> {
       console.error(error);
       next(error);
     }
-  }
-  public async save(
+  };
+  public save = async (
     req: IRequest,
     res: IResponse,
     next: NextFunction
-  ): Promise<void | IResponse> {
+  ): Promise<void | IResponse> => {
     try {
       const queryResult = await this._userService.save(req.body);
 
@@ -182,13 +182,13 @@ export class UserController implements IController<IUser> {
       console.error(error);
       next(error);
     }
-  }
+  };
 
-  public async update(
+  public update = async (
     req: IRequest,
     res: IResponse,
     next: NextFunction
-  ): Promise<void | IResponse> {
+  ): Promise<void | IResponse> => {
     try {
       const _id = req.params.id as string;
       const query = {_id} as IQuery;
@@ -233,13 +233,13 @@ export class UserController implements IController<IUser> {
       console.error(error);
       next(error);
     }
-  }
+  };
 
-  public async delete(
+  public delete = async (
     req: IRequest,
     res: IResponse,
     next: NextFunction
-  ): Promise<void | IResponse> {
+  ): Promise<void | IResponse> => {
     try {
       const _id = req.params.id as string;
       const query = {_id} as IQuery;
@@ -263,5 +263,5 @@ export class UserController implements IController<IUser> {
       console.error(error);
       next(error);
     }
-  }
+  };
 }

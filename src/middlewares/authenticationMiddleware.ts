@@ -1,6 +1,7 @@
 import {NextFunction} from 'express';
 import {
   AuthenticationTokenMissingException,
+  HttpException,
   InvalidAuthenticationTokenException,
 } from '../exceptions';
 import {IQuery, IRequest, IResponse, ITokenData, IUser} from '../interfaces';
@@ -13,19 +14,27 @@ export const authenticationMiddlewware = async (
   res: IResponse,
   next: NextFunction
 ) => {
-  const wts = new WebTokenService();
-  const token = req.cookies['access-token']();
-  const repo = new MongoDbRepository<IUser>(UserModel);
+  try {
+    if (req.url.includes('/login')) return next();
 
-  if (!token) next(new AuthenticationTokenMissingException());
+    const wts = new WebTokenService();
+    const token = req.cookies['access-token'];
+    const repo = new MongoDbRepository<IUser>(UserModel);
 
-  const {data} = wts.verifyToken(token) as ITokenData<IUser>;
-  const user = (await repo.getOne({email: data.email} as IQuery)).data as IUser;
+    if (!token) next(new AuthenticationTokenMissingException());
 
-  if (user) {
-    req.user = user;
-    next();
-  } else {
-    next(new InvalidAuthenticationTokenException());
+    const {data} = wts.verifyToken(token) as ITokenData<IUser>;
+    const user = (await repo.getOne({email: data.email} as IQuery))
+      .data as IUser;
+
+    if (user) {
+      req.user = user;
+      next();
+    } else {
+      next(new InvalidAuthenticationTokenException());
+    }
+  } catch (error: any) {
+    console.error(error);
+    next(new HttpException(error.message, error.status));
   }
 };

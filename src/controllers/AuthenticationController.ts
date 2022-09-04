@@ -83,7 +83,8 @@ export class AuthenticationController {
 
   public login = async (req: IRequest, res: IResponse, next: NextFunction) => {
     try {
-      const {token} = await this._authService.login(req.body);
+      const {token, user} = await this._authService.login(req.body);
+      this.createCookie(res, token);
 
       //flush cache after update
 

@@ -27,6 +27,6 @@ export class WebTokenService {
   }
 
   public verifyToken = (token: string, secret?: string) => {
-    return jwt.verify(token, secret || (process.env.JWT_SECRET as jwt.Secret));
+    return jwt.verify(token, secret ?? (process.env.JWT_SECRET as jwt.Secret));
   };
 }

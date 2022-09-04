@@ -8,6 +8,11 @@ import {IQuery} from './IQuery';
 import {IRepository} from './IRepository';
 import {ITokenData} from './ITokenData';
 import {IService} from './IService';
+import {IClassroom} from './IClassroom';
+import {ISession} from './ISession';
+import {IStudent} from './IStudent';
+import {ISubject} from './ISubject';
+import {ITranscript} from './ITranscript';
 
 export {
   IUser,
@@ -20,4 +25,9 @@ export {
   IRepository,
   ITokenData,
   IService,
+  IClassroom,
+  ISession,
+  IStudent,
+  ISubject,
+  ITranscript,
 };
