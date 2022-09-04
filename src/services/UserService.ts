@@ -18,6 +18,8 @@ export class UserService implements IService<IUser> {
     return await this._repository.getMany(query);
   }
   public async getOne(query: IQuery): Promise<IResult<IUser>> {
+    if (!(await this.isExist(query)))
+      throw new DoesNotExistException('User does not exist in the database.');
     return await this._repository.getOne(query);
   }
   public async isExist(query: IQuery): Promise<boolean> {
