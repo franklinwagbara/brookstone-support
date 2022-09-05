@@ -8,10 +8,11 @@ const StudentSchema = new Schema<IStudent>(
     other_names: {type: String, required: true},
     gender: {type: String, required: true},
     session: {type: Schema.Types.ObjectId, ref: 'Session'},
+    year_group: {type: Schema.Types.ObjectId, ref: 'YearGroup'},
     dob: {type: Date, required: false},
     photo: {type: String, required: false},
   },
   {timestamps: true}
 );
 
-export const StudentModel = model<IUser>('Student', StudentSchema);
+export const StudentModel = model<IStudent>('Student', StudentSchema);

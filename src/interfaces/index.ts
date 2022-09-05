@@ -13,6 +13,8 @@ import {ISession} from './ISession';
 import {IStudent} from './IStudent';
 import {ISubject} from './ISubject';
 import {ITranscript} from './ITranscript';
+import {IEnrollment} from './IEnrollment';
+import {IYearGroup} from './IYearGroup';
 
 export {
   IUser,
@@ -30,4 +32,6 @@ export {
   IStudent,
   ISubject,
   ITranscript,
+  IEnrollment,
+  IYearGroup,
 };

@@ -1,6 +1,7 @@
 import {ISession} from './ISession';
 import {IStudent} from './IStudent';
 import {IUser} from './IUser';
+import {IYearGroup} from './IYearGroup';
 
 export interface IClassroom {
   _id: string;
@@ -8,6 +9,6 @@ export interface IClassroom {
   form_tutor: IUser;
   students: IStudent[];
   session: ISession;
-  year_group: '7' | '8' | '9' | '10' | '11' | '12' | 'ify';
+  year_group: IYearGroup;
   section?: 'junior' | 'senior' | 'ify';
 }

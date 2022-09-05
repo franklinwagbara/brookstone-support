@@ -25,6 +25,6 @@ export interface ITranscript {
   final_exam: number;
   total?: number;
   grade?: string;
-  gpa?: string;
+  gpa?: number;
   comment?: string;
 }

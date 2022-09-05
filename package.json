@@ -47,6 +47,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.5.4",
     "nodemon": "^2.0.19",
+    "react-icons": "^4.4.0",
     "redis": "^4.3.0"
   }
 }

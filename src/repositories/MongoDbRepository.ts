@@ -15,7 +15,13 @@ export class MongoDbRepository<T> implements IRepository<T> {
     const result = {} as IResult<T>;
     query = normalizeQuery(query);
 
-    result.data = await this._model.find(query as FilterQuery<string>);
+    if (modelName === 'Student') {
+      result.data = await this._model
+        .find(query as FilterQuery<string>)
+        .populate(['session', 'year_group'])
+        .exec();
+    } else result.data = await this._model.find(query as FilterQuery<string>);
+
     result.status = 200;
     return Promise.resolve(result);
   }
@@ -24,7 +30,14 @@ export class MongoDbRepository<T> implements IRepository<T> {
     const modelName = this._model.modelName;
     query = normalizeQuery(query);
 
-    result.data = await this._model.findOne(query as FilterQuery<string>);
+    if (modelName === 'Student') {
+      result.data = (await this._model
+        .findOne(query as FilterQuery<string>)
+        .populate(['session', 'year_group'])
+        .exec()) as T;
+    } else
+      result.data = await this._model.findOne(query as FilterQuery<string>);
+
     result.status = 200;
     return result;
   }

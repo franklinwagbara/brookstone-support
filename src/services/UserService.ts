@@ -12,8 +12,8 @@ export class UserService implements IService<IUser> {
     this._repository = repository ?? new MongoDbRepository<IUser>(UserModel);
   }
   public async getMany(query: IQuery): Promise<IResult<IUser>> {
-    if (!(await this.isExist(query)))
-      throw new DoesNotExistException('User does not exist in the database.');
+    // if (!(await this.isExist(query)))
+    //   throw new DoesNotExistException('User does not exist in the database.');
 
     return await this._repository.getMany(query);
   }

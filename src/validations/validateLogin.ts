@@ -2,7 +2,7 @@ import Joi from 'joi';
 import {IUser} from '../interfaces';
 
 export const validateLogin = (user: IUser) => {
-  const schema = Joi.object({
+  const schema = Joi.object<IUser>({
     email: Joi.string()
       .email({
         minDomainSegments: 2,
