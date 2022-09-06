@@ -1,6 +1,6 @@
 import express from 'express';
 import {NextFunction} from 'express-serve-static-core';
-import {IRequest, IResponse, IUser} from '../interfaces';
+import {IRequest, IResponse, IResult, IUser} from '../interfaces';
 import {AuthenticationService} from '../services';
 import {validationMiddleware} from '../middlewares';
 
@@ -56,7 +56,7 @@ export class AuthenticationController {
     name?: string,
     days?: number
   ) => {
-    return res.cookie(name ?? 'access-token', token, {
+    return res.cookie(name ?? 'access_token', token, {
       expires: new Date(Date.now() + (days || 1) * 24 * 60 * 60 * 1000),
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -69,12 +69,16 @@ export class AuthenticationController {
     next: NextFunction
   ) => {
     try {
-      const {token} = await this._authService.register(req.body as IUser);
+      const {token, user} = await this._authService.register(req.body as IUser);
       this.createCookie(res, token);
 
       //todo: flush cache after update
 
-      return res.send({success: 'ok'});
+      return res.send({
+        data: user,
+        error: null,
+        status: 200,
+      } as IResult<IUser>);
     } catch (error) {
       console.error(error);
       return next(error);
@@ -88,7 +92,11 @@ export class AuthenticationController {
 
       //flush cache after update
 
-      return res.send({success: 'ok'});
+      return res.send({
+        data: user,
+        error: null,
+        status: 200,
+      } as IResult<IUser>);
     } catch (error) {
       console.error(error);
       return next(error);
@@ -97,11 +105,15 @@ export class AuthenticationController {
 
   public logout = async (req: IRequest, res: IResponse, next: NextFunction) => {
     try {
-      res.clearCookie('access-token');
+      res.clearCookie('access_token');
 
       //flush cache after update
 
-      return res.send({success: 'ok'});
+      return res.send({
+        data: null,
+        error: null,
+        status: 200,
+      } as IResult<string>);
     } catch (error) {
       console.error(error);
       return next(error);

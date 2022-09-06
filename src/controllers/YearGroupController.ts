@@ -4,22 +4,22 @@ import {
   IQuery,
   IRequest,
   IResponse,
-  ISession,
+  IYearGroup,
 } from '../interfaces';
-import {SessionService} from '../services';
+import {YearGroupService} from '../services';
 import {validationMiddleware} from '../middlewares';
 import {DoesNotExistException} from '../exceptions';
 import _ from 'lodash';
 
-export class SessionController implements IController<ISession> {
+export class YearGroupController implements IController<IYearGroup> {
   private readonly _router: Router;
   private readonly _path: string;
-  private readonly _sessionService: SessionService;
+  private readonly _yearGroupService: YearGroupService;
 
   constructor(path?: string) {
     this._router = express.Router();
-    this._path = path ?? '/session';
-    this._sessionService = new SessionService();
+    this._path = path ?? '/yearGroup';
+    this._yearGroupService = new YearGroupService();
 
     this.initializeRoutes();
   }
@@ -28,36 +28,36 @@ export class SessionController implements IController<ISession> {
     this._router
 
       /**
-       * @route  GET /api/session
-       * @desc   return a list of sessions
+       * @route  GET /api/yearGroup
+       * @desc   return a list of yearGroups
        * @access private
        */
       .get(`${this._path}`, this.getMany)
 
       /**
-       * @route  GET /api/session/id
-       * @desc   returns a single session
+       * @route  GET /api/yearGroup/id
+       * @desc   returns a single yearGroup
        * @access private
        */
       .get(`${this._path}/:id`, this.getOne)
 
       /**
-       * @route  POST /api/session
-       * @desc   creates a session
+       * @route  POST /api/yearGroup
+       * @desc   creates a yearGroup
        * @access private
        */
-      .post(`${this._path}`, validationMiddleware('session'), this.save)
+      .post(`${this._path}`, validationMiddleware('yearGroup'), this.save)
 
       /**
-       * @route  PUT /api/session/id
-       * @desc   updates a single session's record
+       * @route  PUT /api/yearGroup/id
+       * @desc   updates a single yearGroup's record
        * @access private
        */
-      .put(`${this._path}/:id`, validationMiddleware('session'), this.update)
+      .put(`${this._path}/:id`, validationMiddleware('yearGroup'), this.update)
 
       /**
-       * @route  DELETE /api/session/id
-       * @desc   deletes a single session's record
+       * @route  DELETE /api/yearGroup/id
+       * @desc   deletes a single yearGroup's record
        * @access private
        */
       .delete(`${this._path}/:id`, this.delete);
@@ -73,8 +73,8 @@ export class SessionController implements IController<ISession> {
     next: NextFunction
   ): Promise<void | IResponse> => {
     try {
-      const query = _.pick(req.query, ['session', 'term', 'current']) as IQuery;
-      const queryResult = await this._sessionService.getMany(query);
+      const query = _.pick(req.query, ['year', 'session']) as IQuery;
+      const queryResult = await this._yearGroupService.getMany(query);
 
       //cache result
       //await cachedQuery(req.originalUrl, queryResult);
@@ -93,7 +93,7 @@ export class SessionController implements IController<ISession> {
   ): Promise<void | IResponse> => {
     try {
       const query: IQuery = {_id: req.params.id};
-      const queryResult = await this._sessionService.getOne(query);
+      const queryResult = await this._yearGroupService.getOne(query);
 
       //cache result
       //await cachedQuery(req.originalUrl, queryResult);
@@ -110,7 +110,7 @@ export class SessionController implements IController<ISession> {
     next: NextFunction
   ): Promise<void | IResponse> => {
     try {
-      const queryResult = await this._sessionService.save(req.body);
+      const queryResult = await this._yearGroupService.save(req.body);
 
       //flush cache after update: simplistic implementation, can be improved with more time
       //flushCache();
@@ -131,10 +131,12 @@ export class SessionController implements IController<ISession> {
       const _id = req.params.id as string;
       const query = {_id} as IQuery;
 
-      if (!(await this._sessionService.isExist(query)))
-        throw new DoesNotExistException('Session does not exist in database.');
+      if (!(await this._yearGroupService.isExist(query)))
+        throw new DoesNotExistException(
+          'YearGroup does not exist in database.'
+        );
 
-      const queryResult = await this._sessionService.update(
+      const queryResult = await this._yearGroupService.update(
         {_id} as IQuery,
         req.body
       );
@@ -158,10 +160,12 @@ export class SessionController implements IController<ISession> {
       const _id = req.params.id as string;
       const query = {_id} as IQuery;
 
-      if (!(await this._sessionService.isExist(query)))
-        throw new DoesNotExistException('Session does not exist in database.');
+      if (!(await this._yearGroupService.isExist(query)))
+        throw new DoesNotExistException(
+          'YearGroup does not exist in database.'
+        );
 
-      const queryResult = await this._sessionService.delete({_id} as IQuery);
+      const queryResult = await this._yearGroupService.delete({_id} as IQuery);
 
       //flush cache after update: simplistic implementation, can be improved with more time
       //flushCache();

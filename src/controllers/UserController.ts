@@ -89,7 +89,7 @@ export class UserController implements IController<IUser> {
 
       if (!user) next(new HttpException('No loggedin user.'));
 
-      const data = _.pick(user, ['username', 'email', 'role']) as IUser;
+      const data = _.pick(user, ['_id', 'username', 'email', 'role']) as IUser;
 
       const queryResult: IResult<IUser> = {data, status: 200, error: null};
 

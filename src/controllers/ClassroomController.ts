@@ -4,22 +4,22 @@ import {
   IQuery,
   IRequest,
   IResponse,
-  ISession,
+  IClassroom,
 } from '../interfaces';
-import {SessionService} from '../services';
+import {ClassroomService} from '../services';
 import {validationMiddleware} from '../middlewares';
 import {DoesNotExistException} from '../exceptions';
 import _ from 'lodash';
 
-export class SessionController implements IController<ISession> {
+export class ClassroomController implements IController<IClassroom> {
   private readonly _router: Router;
   private readonly _path: string;
-  private readonly _sessionService: SessionService;
+  private readonly _classroomService: ClassroomService;
 
   constructor(path?: string) {
     this._router = express.Router();
-    this._path = path ?? '/session';
-    this._sessionService = new SessionService();
+    this._path = path ?? '/classroom';
+    this._classroomService = new ClassroomService();
 
     this.initializeRoutes();
   }
@@ -28,36 +28,36 @@ export class SessionController implements IController<ISession> {
     this._router
 
       /**
-       * @route  GET /api/session
-       * @desc   return a list of sessions
+       * @route  GET /api/classroom
+       * @desc   return a list of classrooms
        * @access private
        */
       .get(`${this._path}`, this.getMany)
 
       /**
-       * @route  GET /api/session/id
-       * @desc   returns a single session
+       * @route  GET /api/classroom/id
+       * @desc   returns a single classroom
        * @access private
        */
       .get(`${this._path}/:id`, this.getOne)
 
       /**
-       * @route  POST /api/session
-       * @desc   creates a session
+       * @route  POST /api/classroom
+       * @desc   creates a classroom
        * @access private
        */
-      .post(`${this._path}`, validationMiddleware('session'), this.save)
+      .post(`${this._path}`, validationMiddleware('classroom'), this.save)
 
       /**
-       * @route  PUT /api/session/id
-       * @desc   updates a single session's record
+       * @route  PUT /api/classroom/id
+       * @desc   updates a single classroom's record
        * @access private
        */
-      .put(`${this._path}/:id`, validationMiddleware('session'), this.update)
+      .put(`${this._path}/:id`, validationMiddleware('classroom'), this.update)
 
       /**
-       * @route  DELETE /api/session/id
-       * @desc   deletes a single session's record
+       * @route  DELETE /api/classroom/id
+       * @desc   deletes a single classroom's record
        * @access private
        */
       .delete(`${this._path}/:id`, this.delete);
@@ -73,8 +73,15 @@ export class SessionController implements IController<ISession> {
     next: NextFunction
   ): Promise<void | IResponse> => {
     try {
-      const query = _.pick(req.query, ['session', 'term', 'current']) as IQuery;
-      const queryResult = await this._sessionService.getMany(query);
+      const query = _.pick(req.query, [
+        'name',
+        'form_tutor',
+        'students',
+        'session',
+        'year_group',
+        'section',
+      ]) as IQuery;
+      const queryResult = await this._classroomService.getMany(query);
 
       //cache result
       //await cachedQuery(req.originalUrl, queryResult);
@@ -93,7 +100,7 @@ export class SessionController implements IController<ISession> {
   ): Promise<void | IResponse> => {
     try {
       const query: IQuery = {_id: req.params.id};
-      const queryResult = await this._sessionService.getOne(query);
+      const queryResult = await this._classroomService.getOne(query);
 
       //cache result
       //await cachedQuery(req.originalUrl, queryResult);
@@ -110,7 +117,7 @@ export class SessionController implements IController<ISession> {
     next: NextFunction
   ): Promise<void | IResponse> => {
     try {
-      const queryResult = await this._sessionService.save(req.body);
+      const queryResult = await this._classroomService.save(req.body);
 
       //flush cache after update: simplistic implementation, can be improved with more time
       //flushCache();
@@ -131,10 +138,12 @@ export class SessionController implements IController<ISession> {
       const _id = req.params.id as string;
       const query = {_id} as IQuery;
 
-      if (!(await this._sessionService.isExist(query)))
-        throw new DoesNotExistException('Session does not exist in database.');
+      if (!(await this._classroomService.isExist(query)))
+        throw new DoesNotExistException(
+          'Classroom does not exist in database.'
+        );
 
-      const queryResult = await this._sessionService.update(
+      const queryResult = await this._classroomService.update(
         {_id} as IQuery,
         req.body
       );
@@ -158,10 +167,12 @@ export class SessionController implements IController<ISession> {
       const _id = req.params.id as string;
       const query = {_id} as IQuery;
 
-      if (!(await this._sessionService.isExist(query)))
-        throw new DoesNotExistException('Session does not exist in database.');
+      if (!(await this._classroomService.isExist(query)))
+        throw new DoesNotExistException(
+          'Classroom does not exist in database.'
+        );
 
-      const queryResult = await this._sessionService.delete({_id} as IQuery);
+      const queryResult = await this._classroomService.delete({_id} as IQuery);
 
       //flush cache after update: simplistic implementation, can be improved with more time
       //flushCache();

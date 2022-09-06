@@ -2,6 +2,7 @@ import {Schema, model} from 'mongoose';
 import {IEnrollment} from '../interfaces';
 
 const EnrollmentSchema = new Schema<IEnrollment>({
+  student: {type: Schema.Types.ObjectId, ref: 'Student'},
   subject: {type: Schema.Types.ObjectId, ref: 'Subject'},
   session: {type: Schema.Types.ObjectId, ref: 'Session'},
   teacher: {type: Schema.Types.ObjectId, ref: 'User'},

@@ -8,6 +8,7 @@ export const validateStudent = (student: IStudent) => {
     other_names: Joi.string(),
     gender: Joi.string().required(),
     session: Joi.string().required(),
+    year_group: Joi.string().required(),
     dob: Joi.string(),
     photo: Joi.string(),
   });

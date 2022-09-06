@@ -18,7 +18,8 @@ export const authenticationMiddlewware = async (
     if (req.url.includes('/login')) return next();
 
     const wts = new WebTokenService();
-    const token = req.cookies['access-token'];
+    const token = req.cookies['access_token'];
+    console.log(token, req.cookies);
     const repo = new MongoDbRepository<IUser>(UserModel);
 
     if (!token) next(new AuthenticationTokenMissingException());
@@ -34,7 +35,7 @@ export const authenticationMiddlewware = async (
       next(new InvalidAuthenticationTokenException());
     }
   } catch (error: any) {
-    console.error(error);
+    console.error('\nAuthentication Error: ', error);
     next(new HttpException(error.message, error.status));
   }
 };

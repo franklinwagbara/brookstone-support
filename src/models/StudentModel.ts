@@ -5,7 +5,7 @@ const StudentSchema = new Schema<IStudent>(
   {
     first_name: {type: String, required: true},
     last_name: {type: String, required: true},
-    other_names: {type: String, required: true},
+    other_names: {type: String, required: false},
     gender: {type: String, required: true},
     session: {type: Schema.Types.ObjectId, ref: 'Session'},
     year_group: {type: Schema.Types.ObjectId, ref: 'YearGroup'},

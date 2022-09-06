@@ -2,6 +2,13 @@ import {ISession} from './ISession';
 
 export interface IYearGroup {
   _id?: string;
-  year: '7' | '8' | '9' | '10' | '11' | '12' | 'ify';
+  year:
+    | 'Year 7'
+    | 'Year 8'
+    | 'Year 9'
+    | 'Year 10'
+    | 'Year 11'
+    | 'Year 12'
+    | 'IFY';
   session: ISession;
 }

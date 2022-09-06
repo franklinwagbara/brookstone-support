@@ -29,7 +29,7 @@ export class AuthenticationService {
     let {data} = await this._repository.save(user);
 
     //generate token
-    const newUser = _.pick(data, ['username', 'email', 'role']);
+    const newUser = _.pick(data, ['_id', 'username', 'email', 'role']);
     const token = webToken.signToken({data: newUser} as ITokenData<IUser>);
 
     return {token, user: newUser};
@@ -51,7 +51,7 @@ export class AuthenticationService {
 
     if (!passwordMatch) throw new AuthenticationException();
 
-    user_from_db = _.pick(user_from_db, ['username', 'email', 'role']);
+    user_from_db = _.pick(user_from_db, ['_id', 'username', 'email', 'role']);
     const token = webToken.signToken({data: user_from_db});
 
     return {token, user: user_from_db};

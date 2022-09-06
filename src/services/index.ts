@@ -5,6 +5,10 @@ import {UserService} from './UserService';
 import {SessionService} from './SessionService';
 import {SubjectService} from './SubjectService';
 import {StudentService} from './StudentService';
+import {YearGroupService} from './YearGroupService';
+import {ClassroomService} from './ClassroomService';
+import {EnrollmentService} from './EnrollmentService';
+import {TranscriptService} from './TranscriptService';
 
 export {
   MongoDbConnection,
@@ -14,4 +18,8 @@ export {
   SessionService,
   SubjectService,
   StudentService,
+  YearGroupService,
+  ClassroomService,
+  EnrollmentService,
+  TranscriptService,
 };

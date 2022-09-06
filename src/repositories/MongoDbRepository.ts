@@ -20,6 +20,28 @@ export class MongoDbRepository<T> implements IRepository<T> {
         .find(query as FilterQuery<string>)
         .populate(['session', 'year_group'])
         .exec();
+    } else if (modelName === 'YearGroup') {
+      result.data = await this._model
+        .find(query as FilterQuery<string>)
+        .populate(['session'])
+        .exec();
+    } else if (modelName === 'Classroom') {
+      result.data = await this._model
+        .find(query as FilterQuery<string>)
+        .populate(['form_tutor', 'students', 'session', 'year_group'])
+        .exec();
+    } else if (modelName === 'Enrollment') {
+      result.data = await this._model
+        .find(query as FilterQuery<string>)
+        .populate([
+          'student',
+          'subject',
+          'session',
+          'teacher',
+          'classroom',
+          'transcript',
+        ])
+        .exec();
     } else result.data = await this._model.find(query as FilterQuery<string>);
 
     result.status = 200;
@@ -35,6 +57,28 @@ export class MongoDbRepository<T> implements IRepository<T> {
         .findOne(query as FilterQuery<string>)
         .populate(['session', 'year_group'])
         .exec()) as T;
+    } else if (modelName === 'YearGroup') {
+      result.data = (await this._model
+        .findOne(query as FilterQuery<string>)
+        .populate(['session'])
+        .exec()) as T;
+    } else if (modelName === 'Classroom') {
+      result.data = (await this._model
+        .findOne(query as FilterQuery<string>)
+        .populate(['form_tutor', 'students', 'session', 'year_group'])
+        .exec()) as T;
+    } else if (modelName === 'Enrollment') {
+      result.data = (await this._model
+        .findOne(query as FilterQuery<string>)
+        .populate([
+          'student',
+          'subject',
+          'session',
+          'teacher',
+          'classroom',
+          'transcript',
+        ])
+        .exec()) as T;
     } else
       result.data = await this._model.findOne(query as FilterQuery<string>);
 
@@ -49,6 +93,7 @@ export class MongoDbRepository<T> implements IRepository<T> {
       : false;
   }
   public async save(data: T): Promise<IResult<T>> {
+    console.log('\nsaving in repo: ', data);
     const result = {} as IResult<T>;
     const newData = new this._model(data);
     await newData.save();
