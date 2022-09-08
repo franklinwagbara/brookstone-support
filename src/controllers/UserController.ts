@@ -89,7 +89,14 @@ export class UserController implements IController<IUser> {
 
       if (!user) next(new HttpException('No loggedin user.'));
 
-      const data = _.pick(user, ['_id', 'username', 'email', 'role']) as IUser;
+      const data = _.pick(user, [
+        '_id',
+        'username',
+        'firstname',
+        'lastname',
+        'email',
+        'role',
+      ]) as IUser;
 
       const queryResult: IResult<IUser> = {data, status: 200, error: null};
 
@@ -108,13 +115,26 @@ export class UserController implements IController<IUser> {
     next: NextFunction
   ): Promise<void | IResponse> => {
     try {
-      const query = _.pick(req.query, ['username', 'email', 'role']) as IQuery;
+      const query = _.pick(req.query, [
+        'username',
+        'firstname',
+        'lastname',
+        'email',
+        'role',
+      ]) as IQuery;
       const queryResult = await this._userService.getMany(query);
 
       if (queryResult.data) {
         let data = queryResult.data;
         data = (data as IUser[]).map((user: IUser) => {
-          return _.pick(user, ['_id', 'username', 'email', 'role']) as IUser;
+          return _.pick(user, [
+            '_id',
+            'username',
+            'firstname',
+            'lastname',
+            'email',
+            'role',
+          ]) as IUser;
         });
 
         queryResult.data = data;
@@ -143,7 +163,14 @@ export class UserController implements IController<IUser> {
 
       let data = queryResult.data as IUser;
 
-      data = _.pick(data, ['_id', 'username', 'email', 'role']) as IUser;
+      data = _.pick(data, [
+        '_id',
+        'username',
+        'firstname',
+        'lastname',
+        'email',
+        'role',
+      ]) as IUser;
 
       queryResult.data = data;
       queryResult.error = null;
@@ -168,7 +195,14 @@ export class UserController implements IController<IUser> {
 
       let data = queryResult.data as IUser;
 
-      data = _.pick(data, ['_id', 'username', 'email', 'role']) as IUser;
+      data = _.pick(data, [
+        '_id',
+        'username',
+        'firstname',
+        'lastname',
+        'email',
+        'role',
+      ]) as IUser;
 
       queryResult.data = data;
       queryResult.error = null;
@@ -220,7 +254,14 @@ export class UserController implements IController<IUser> {
       queryResult = await this._userService.update({_id} as IQuery, req.body);
       let data = queryResult.data as IUser;
 
-      data = _.pick(data, ['_id', 'username', 'email', 'role']) as IUser;
+      data = _.pick(data, [
+        '_id',
+        'username',
+        'firstname',
+        'lastname',
+        'email',
+        'role',
+      ]) as IUser;
       queryResult.data = data;
       queryResult.error = null;
       queryResult.status = 200;
@@ -250,7 +291,14 @@ export class UserController implements IController<IUser> {
       const queryResult = await this._userService.delete({_id} as IQuery);
       let data = queryResult.data as IUser;
 
-      data = _.pick(data, ['_id', 'username', 'email', 'role']) as IUser;
+      data = _.pick(data, [
+        '_id',
+        'username',
+        'firstname',
+        'lastname',
+        'email',
+        'role',
+      ]) as IUser;
       queryResult.data = data;
       queryResult.error = null;
       queryResult.status = 200;

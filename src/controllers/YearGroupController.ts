@@ -53,7 +53,11 @@ export class YearGroupController implements IController<IYearGroup> {
        * @desc   updates a single yearGroup's record
        * @access private
        */
-      .put(`${this._path}/:id`, validationMiddleware('yearGroup'), this.update)
+      .put(
+        `${this._path}/:id`,
+        validationMiddleware('yearGroupUpdate'),
+        this.update
+      )
 
       /**
        * @route  DELETE /api/yearGroup/id

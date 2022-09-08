@@ -42,6 +42,11 @@ export class MongoDbRepository<T> implements IRepository<T> {
           'transcript',
         ])
         .exec();
+    } else if (modelName === 'Transcript') {
+      result.data = await this._model
+        .find(query as FilterQuery<string>)
+        .populate(['student', 'subject', 'session', 'teacher', 'classroom'])
+        .exec();
     } else result.data = await this._model.find(query as FilterQuery<string>);
 
     result.status = 200;
@@ -78,6 +83,11 @@ export class MongoDbRepository<T> implements IRepository<T> {
           'classroom',
           'transcript',
         ])
+        .exec()) as T;
+    } else if (modelName === 'Transcript') {
+      result.data = (await this._model
+        .findOne(query as FilterQuery<string>)
+        .populate(['student', 'subject', 'session', 'teacher', 'classroom'])
         .exec()) as T;
     } else
       result.data = await this._model.findOne(query as FilterQuery<string>);

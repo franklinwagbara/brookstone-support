@@ -14,6 +14,7 @@ export const validateTranscript = (transcript: ITranscript) => {
     week_4: Joi.number(),
     half_term_exam: Joi.number(),
     ca_1: Joi.number(),
+    ccm: Joi.number(),
     week_5: Joi.number(),
     week_6: Joi.number(),
     week_7: Joi.number(),

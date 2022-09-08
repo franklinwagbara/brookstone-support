@@ -32,11 +32,11 @@ export class EnrollmentService implements IService<IEnrollment> {
   }
   public async save(data: IEnrollment): Promise<IResult<IEnrollment>> {
     if (
-      (await this.isExist({_id: data.student.toString()} as IQuery)) &&
-      (await this.isExist({_id: data.subject.toString()})) &&
-      (await this.isExist({_id: data.session.toString()}))
+      (await this.isExist({student: data.student.toString()})) &&
+      (await this.isExist({subject: data.subject.toString()})) &&
+      (await this.isExist({session: data.session.toString()}))
     )
-      throw new AlreadyExistException('Enrollment already exists');
+      throw new AlreadyExistException('Alredy Enrolled to this class!');
 
     return await this._repository.save(data);
   }

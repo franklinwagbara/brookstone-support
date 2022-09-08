@@ -32,9 +32,9 @@ export class TranscriptService implements IService<ITranscript> {
   }
   public async save(data: ITranscript): Promise<IResult<ITranscript>> {
     if (
-      (await this.isExist({student: data.student._id})) &&
-      (await this.isExist({subject: data.subject._id})) &&
-      (await this.isExist({session: data.session._id}))
+      (await this.isExist({student: data.student.toString()})) &&
+      (await this.isExist({subject: data.subject.toString()})) &&
+      (await this.isExist({session: data.session.toString()}))
     )
       throw new AlreadyExistException('Transcript already exists');
 

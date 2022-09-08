@@ -53,7 +53,11 @@ export class SubjectController implements IController<ISubject> {
        * @desc   updates a single subject's record
        * @access private
        */
-      .put(`${this._path}/:id`, validationMiddleware('subject'), this.update)
+      .put(
+        `${this._path}/:id`,
+        validationMiddleware('subjectUpdate'),
+        this.update
+      )
 
       /**
        * @route  DELETE /api/subject/id

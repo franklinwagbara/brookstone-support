@@ -8,7 +8,7 @@ export const validateEnrollment = (enrollment: IEnrollment) => {
     session: Joi.string().required(),
     teacher: Joi.string().required(),
     classroom: Joi.string().required(),
-    transcript: Joi.string(),
+    transcript: Joi.string().required(),
   });
 
   return schema.validate(enrollment, {abortEarly: false});

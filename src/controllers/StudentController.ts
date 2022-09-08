@@ -53,7 +53,11 @@ export class StudentController implements IController<IStudent> {
        * @desc   updates a single student's record
        * @access private
        */
-      .put(`${this._path}/:id`, validationMiddleware('student'), this.update)
+      .put(
+        `${this._path}/:id`,
+        validationMiddleware('studentUpdate'),
+        this.update
+      )
 
       /**
        * @route  DELETE /api/student/id

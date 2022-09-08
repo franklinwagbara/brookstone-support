@@ -34,7 +34,7 @@ export class UserService implements IService<IUser> {
 
     //persist user
     user.password = hashedPassword;
-    user.role = Roles.User;
+    //user.role = Roles.User;
 
     return await this._repository.save(user);
   }

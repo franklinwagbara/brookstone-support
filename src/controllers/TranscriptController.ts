@@ -53,7 +53,11 @@ export class TranscriptController implements IController<ITranscript> {
        * @desc   updates a single transcript's record
        * @access private
        */
-      .put(`${this._path}/:id`, validationMiddleware('transcript'), this.update)
+      .put(
+        `${this._path}/:id`,
+        validationMiddleware('transcriptUpdate'),
+        this.update
+      )
 
       /**
        * @route  DELETE /api/transcript/id
@@ -132,6 +136,7 @@ export class TranscriptController implements IController<ITranscript> {
     next: NextFunction
   ): Promise<void | IResponse> => {
     try {
+      console.log(req.body);
       const queryResult = await this._TranscriptService.save(req.body);
 
       //flush cache after update: simplistic implementation, can be improved with more time

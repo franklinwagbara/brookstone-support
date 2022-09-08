@@ -12,5 +12,5 @@ export interface IEnrollment {
   session: ISession;
   teacher: IUser;
   classroom: IClassroom;
-  transcript?: ITranscript;
+  transcript: ITranscript;
 }

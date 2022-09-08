@@ -53,7 +53,11 @@ export class ClassroomController implements IController<IClassroom> {
        * @desc   updates a single classroom's record
        * @access private
        */
-      .put(`${this._path}/:id`, validationMiddleware('classroom'), this.update)
+      .put(
+        `${this._path}/:id`,
+        validationMiddleware('classroomUpdate'),
+        this.update
+      )
 
       /**
        * @route  DELETE /api/classroom/id

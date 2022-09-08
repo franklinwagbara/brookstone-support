@@ -53,7 +53,11 @@ export class EnrollmentController implements IController<IEnrollment> {
        * @desc   updates a single enrollment's record
        * @access private
        */
-      .put(`${this._path}/:id`, validationMiddleware('enrollment'), this.update)
+      .put(
+        `${this._path}/:id`,
+        validationMiddleware('enrollmentUpdate'),
+        this.update
+      )
 
       /**
        * @route  DELETE /api/enrollment/id

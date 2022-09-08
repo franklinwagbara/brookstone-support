@@ -53,7 +53,11 @@ export class SessionController implements IController<ISession> {
        * @desc   updates a single session's record
        * @access private
        */
-      .put(`${this._path}/:id`, validationMiddleware('session'), this.update)
+      .put(
+        `${this._path}/:id`,
+        validationMiddleware('sessionUpdate'),
+        this.update
+      )
 
       /**
        * @route  DELETE /api/session/id
