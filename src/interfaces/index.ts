@@ -15,6 +15,8 @@ import {ISubject} from './ISubject';
 import {ITranscript} from './ITranscript';
 import {IEnrollment} from './IEnrollment';
 import {IYearGroup} from './IYearGroup';
+import {IClassroomEnrollment} from './IClassroomEnrollment';
+import {IBehaviour} from './IBehaviour';
 
 export {
   IUser,
@@ -34,4 +36,6 @@ export {
   ITranscript,
   IEnrollment,
   IYearGroup,
+  IClassroomEnrollment,
+  IBehaviour,
 };

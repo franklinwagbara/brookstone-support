@@ -18,7 +18,7 @@ export class MongoDbRepository<T> implements IRepository<T> {
     if (modelName === 'Student') {
       result.data = await this._model
         .find(query as FilterQuery<string>)
-        .populate(['session', 'year_group'])
+        .populate(['session', 'year_group', 'classroom'])
         .exec();
     } else if (modelName === 'YearGroup') {
       result.data = await this._model
@@ -46,6 +46,16 @@ export class MongoDbRepository<T> implements IRepository<T> {
       result.data = await this._model
         .find(query as FilterQuery<string>)
         .populate(['student', 'subject', 'session', 'teacher', 'classroom'])
+        .exec();
+    } else if (modelName === 'ClassroomEnrollment') {
+      result.data = await this._model
+        .find(query as FilterQuery<string>)
+        .populate(['student', 'session', 'classroom'])
+        .exec();
+    } else if (modelName === 'Behaviour') {
+      result.data = await this._model
+        .find(query as FilterQuery<string>)
+        .populate(['student', 'session'])
         .exec();
     } else result.data = await this._model.find(query as FilterQuery<string>);
 
@@ -60,7 +70,7 @@ export class MongoDbRepository<T> implements IRepository<T> {
     if (modelName === 'Student') {
       result.data = (await this._model
         .findOne(query as FilterQuery<string>)
-        .populate(['session', 'year_group'])
+        .populate(['session', 'year_group', 'classroom'])
         .exec()) as T;
     } else if (modelName === 'YearGroup') {
       result.data = (await this._model
@@ -84,10 +94,20 @@ export class MongoDbRepository<T> implements IRepository<T> {
           'transcript',
         ])
         .exec()) as T;
+    } else if (modelName === 'ClassroomEnrollment') {
+      result.data = (await this._model
+        .findOne(query as FilterQuery<string>)
+        .populate(['student', 'session', 'classroom'])
+        .exec()) as T;
     } else if (modelName === 'Transcript') {
       result.data = (await this._model
         .findOne(query as FilterQuery<string>)
         .populate(['student', 'subject', 'session', 'teacher', 'classroom'])
+        .exec()) as T;
+    } else if (modelName === 'Behaviour') {
+      result.data = (await this._model
+        .findOne(query as FilterQuery<string>)
+        .populate(['student', 'session', 'session'])
         .exec()) as T;
     } else
       result.data = await this._model.findOne(query as FilterQuery<string>);
@@ -103,7 +123,6 @@ export class MongoDbRepository<T> implements IRepository<T> {
       : false;
   }
   public async save(data: T): Promise<IResult<T>> {
-    console.log('\nsaving in repo: ', data);
     const result = {} as IResult<T>;
     const newData = new this._model(data);
     await newData.save();

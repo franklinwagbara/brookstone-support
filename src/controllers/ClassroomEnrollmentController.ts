@@ -4,22 +4,24 @@ import {
   IQuery,
   IRequest,
   IResponse,
-  IStudent,
+  IClassroomEnrollment,
 } from '../interfaces';
-import {StudentService} from '../services';
+import {ClassroomEnrollmentService} from '../services';
 import {validationMiddleware} from '../middlewares';
 import {DoesNotExistException} from '../exceptions';
 import _ from 'lodash';
 
-export class StudentController implements IController<IStudent> {
+export class ClassroomEnrollmentController
+  implements IController<IClassroomEnrollment>
+{
   private readonly _router: Router;
   private readonly _path: string;
-  private readonly _studentService: StudentService;
+  private readonly _classroomEnrollmentService: ClassroomEnrollmentService;
 
   constructor(path?: string) {
     this._router = express.Router();
-    this._path = path ?? '/student';
-    this._studentService = new StudentService();
+    this._path = path ?? '/classroomenrollment';
+    this._classroomEnrollmentService = new ClassroomEnrollmentService();
 
     this.initializeRoutes();
   }
@@ -28,40 +30,44 @@ export class StudentController implements IController<IStudent> {
     this._router
 
       /**
-       * @route  GET /api/student
-       * @desc   return a list of students
+       * @route  GET /api/classroomenrollment
+       * @desc   return a list of classroomenrollments
        * @access private
        */
       .get(`${this._path}`, this.getMany)
 
       /**
-       * @route  GET /api/student/id
-       * @desc   returns a single student
+       * @route  GET /api/classroomenrollment/id
+       * @desc   returns a single classroomenrollment
        * @access private
        */
       .get(`${this._path}/:id`, this.getOne)
 
       /**
-       * @route  POST /api/student
-       * @desc   creates a student
+       * @route  POST /api/classroomenrollment
+       * @desc   creates a classroomenrollment
        * @access private
        */
-      .post(`${this._path}`, validationMiddleware('student'), this.save)
+      .post(
+        `${this._path}`,
+        validationMiddleware('classroomEnrollment'),
+        this.save
+      )
 
       /**
-       * @route  PUT /api/student/id
-       * @desc   updates a single student's record
+       * @route  PUT /api/classroomenrollment/id
+       * @desc   updates a single classroomenrollment's record
        * @access private
        */
       .put(
         `${this._path}/:id`,
-        validationMiddleware('studentUpdate'),
+        validationMiddleware('classroomEnrollmentUpdate'),
         this.update
       )
 
       /**
-       * @route  DELETE /api/student/id
-       * @desc   deletes a single student's record
+       * @route  DELETE /api/classroomenrollment/id
+       * @desc   deletes a single classroomenrollment's record
        * @access private
        */
       .delete(`${this._path}/:id`, this.delete);
@@ -78,17 +84,14 @@ export class StudentController implements IController<IStudent> {
   ): Promise<void | IResponse> => {
     try {
       const query = _.pick(req.query, [
-        'first_name',
-        'last_name',
-        'other_name',
-        'gender',
+        'student',
+        'subject',
         'session',
-        'year_group',
+        'teacher',
         'classroom',
-        'dob',
-        'photo',
+        'transcript',
       ]) as IQuery;
-      const queryResult = await this._studentService.getMany(query);
+      const queryResult = await this._classroomEnrollmentService.getMany(query);
 
       //cache result
       //await cachedQuery(req.originalUrl, queryResult);
@@ -107,7 +110,7 @@ export class StudentController implements IController<IStudent> {
   ): Promise<void | IResponse> => {
     try {
       const query: IQuery = {_id: req.params.id};
-      const queryResult = await this._studentService.getOne(query);
+      const queryResult = await this._classroomEnrollmentService.getOne(query);
 
       //cache result
       //await cachedQuery(req.originalUrl, queryResult);
@@ -124,7 +127,7 @@ export class StudentController implements IController<IStudent> {
     next: NextFunction
   ): Promise<void | IResponse> => {
     try {
-      const queryResult = await this._studentService.save(req.body);
+      const queryResult = await this._classroomEnrollmentService.save(req.body);
 
       //flush cache after update: simplistic implementation, can be improved with more time
       //flushCache();
@@ -145,10 +148,12 @@ export class StudentController implements IController<IStudent> {
       const _id = req.params.id as string;
       const query = {_id} as IQuery;
 
-      if (!(await this._studentService.isExist(query)))
-        throw new DoesNotExistException('student does not exist in database.');
+      if (!(await this._classroomEnrollmentService.isExist(query)))
+        throw new DoesNotExistException(
+          'Enrollment does not exist in database.'
+        );
 
-      const queryResult = await this._studentService.update(
+      const queryResult = await this._classroomEnrollmentService.update(
         {_id} as IQuery,
         req.body
       );
@@ -172,10 +177,14 @@ export class StudentController implements IController<IStudent> {
       const _id = req.params.id as string;
       const query = {_id} as IQuery;
 
-      if (!(await this._studentService.isExist(query)))
-        throw new DoesNotExistException('student does not exist in database.');
+      if (!(await this._classroomEnrollmentService.isExist(query)))
+        throw new DoesNotExistException(
+          'Enrollment does not exist in database.'
+        );
 
-      const queryResult = await this._studentService.delete({_id} as IQuery);
+      const queryResult = await this._classroomEnrollmentService.delete({
+        _id,
+      } as IQuery);
 
       //flush cache after update: simplistic implementation, can be improved with more time
       //flushCache();

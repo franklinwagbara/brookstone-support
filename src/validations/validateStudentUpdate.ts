@@ -8,9 +8,10 @@ export const validateStudentUpdate = (student: IStudent) => {
     other_names: Joi.string(),
     gender: Joi.string(),
     session: Joi.string(),
+    classroom: Joi.string(),
     year_group: Joi.string(),
-    dob: Joi.string(),
-    photo: Joi.string(),
+    dob: Joi.string().allow('').allow(null),
+    photo: Joi.string().allow('').allow(null),
   });
 
   return schema.validate(student, {abortEarly: false});

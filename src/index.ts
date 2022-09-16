@@ -9,6 +9,7 @@ import {
   ClassroomController,
   EnrollmentController,
   TranscriptController,
+  ClassroomEnrollmentController,
 } from './controllers';
 import {validateEnv} from './utils/validateEnv';
 
@@ -23,5 +24,6 @@ const app = new App([
   new ClassroomController(),
   new EnrollmentController(),
   new TranscriptController(),
+  new ClassroomEnrollmentController(),
 ]);
 app.run();

@@ -4,25 +4,28 @@ import {
   IRepository,
   IResult,
   IService,
-  ITranscript,
+  IClassroomEnrollment,
 } from '../interfaces';
-import {TranscriptModel} from '../models';
+import {ClassroomEnrollmentModel} from '../models';
 import {MongoDbRepository} from '../repositories';
 
-export class TranscriptService implements IService<ITranscript> {
-  private readonly _repository: IRepository<ITranscript>;
+export class ClassroomEnrollmentService
+  implements IService<IClassroomEnrollment>
+{
+  private readonly _repository: IRepository<IClassroomEnrollment>;
 
-  constructor(repository?: IRepository<ITranscript>) {
+  constructor(repository?: IRepository<IClassroomEnrollment>) {
     this._repository =
-      repository ?? new MongoDbRepository<ITranscript>(TranscriptModel);
+      repository ??
+      new MongoDbRepository<IClassroomEnrollment>(ClassroomEnrollmentModel);
   }
-  public async getMany(query: IQuery): Promise<IResult<ITranscript>> {
+  public async getMany(query: IQuery): Promise<IResult<IClassroomEnrollment>> {
     return await this._repository.getMany(query);
   }
-  public async getOne(query: IQuery): Promise<IResult<ITranscript>> {
+  public async getOne(query: IQuery): Promise<IResult<IClassroomEnrollment>> {
     if (!(await this.isExist(query)))
       throw new DoesNotExistException(
-        'Transcript does not exist in the database.'
+        'Enrollment does not exist in the database.'
       );
 
     return await this._repository.getOne(query);
@@ -30,26 +33,27 @@ export class TranscriptService implements IService<ITranscript> {
   public async isExist(query: IQuery): Promise<boolean> {
     return await this._repository.isExist(query);
   }
-  public async save(data: ITranscript): Promise<IResult<ITranscript>> {
+  public async save(
+    data: IClassroomEnrollment
+  ): Promise<IResult<IClassroomEnrollment>> {
     if (
       await this.isExist({
         student: data.student.toString(),
-        subject: data.subject.toString(),
         session: data.session.toString(),
         classroom: data.classroom.toString(),
       })
     )
-      throw new AlreadyExistException('Transcript already exists');
+      throw new AlreadyExistException('Alredy Enrolled to this class!');
 
     return await this._repository.save(data);
   }
   public async update(
     query: IQuery,
-    data: ITranscript
-  ): Promise<IResult<ITranscript>> {
+    data: IClassroomEnrollment
+  ): Promise<IResult<IClassroomEnrollment>> {
     return await this._repository.update(query, data);
   }
-  public async delete(query: IQuery): Promise<IResult<ITranscript>> {
+  public async delete(query: IQuery): Promise<IResult<IClassroomEnrollment>> {
     return await this._repository.delete(query);
   }
 }

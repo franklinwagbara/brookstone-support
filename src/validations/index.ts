@@ -16,6 +16,10 @@ import {validateEnrollment} from './validateEnrollment';
 import {validateEnrollmentUpdate} from './validateEnrollmentUpdate';
 import {validateYearGroup} from './validateYearGroup';
 import {validateYearGroupUpdate} from './validateYearGroupUpdate';
+import {validateClassroomEnrollment} from './validateClassroomEnrollment';
+import {validateClassroomEnrollmentUpdate} from './validateClassroomEnrollmentUpdate';
+import {validateBehaviourUpdate} from './validateBehaviourUpdate';
+import {validateBehaviour} from './validateBehaviour';
 
 export {
   validateLogin,
@@ -36,4 +40,7 @@ export {
   validateEnrollmentUpdate,
   validateYearGroup,
   validateYearGroupUpdate,
+  validateClassroomEnrollment,
+  validateClassroomEnrollmentUpdate,
+  validateBehaviour,
 };

@@ -25,10 +25,7 @@ export class SessionService implements IService<ISession> {
     return await this._repository.isExist(query);
   }
   public async save(data: ISession): Promise<IResult<ISession>> {
-    if (
-      (await this.isExist({session: data.session})) &&
-      (await this.isExist({term: data.term}))
-    )
+    if (await this.isExist({session: data.session, term: data.term}))
       throw new AlreadyExistException('Session already exists');
 
     return await this._repository.save(data);

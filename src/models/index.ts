@@ -6,6 +6,8 @@ import {SubjectModel} from './SubjectModel';
 import {TranscriptModel} from './TranscriptModel';
 import {EnrollmentModel} from './Enrollment';
 import {YearGroupModel} from './YearGroupModel';
+import {ClassroomEnrollmentModel} from './ClassroomEnrollmentModel';
+import {BehaviourModel} from './BehaviourModel';
 
 export {
   UserModel,
@@ -16,4 +18,6 @@ export {
   TranscriptModel,
   EnrollmentModel,
   YearGroupModel,
+  ClassroomEnrollmentModel,
+  BehaviourModel,
 };

@@ -22,7 +22,11 @@ import {
   validateUserUpdate,
   validateYearGroup,
   validateYearGroupUpdate,
+  validateClassroomEnrollment,
+  validateClassroomEnrollmentUpdate,
+  validateBehaviour,
 } from '../validations';
+import {validateBehaviourUpdate} from '../validations/validateBehaviourUpdate';
 
 export const validationMiddleware = (type: string) => {
   return (req: IRequest, res: IResponse, next: NextFunction) => {
@@ -40,12 +44,19 @@ export const validationMiddleware = (type: string) => {
     else if (type === 'transcript') result = validateTranscript(req.body);
     else if (type === 'transcriptUpdate')
       result = validateTranscriptUpdate(req.body);
+    else if (type === 'behaviour') result = validateBehaviour(req.body);
+    else if (type === 'behaviourUpdate')
+      result = validateBehaviourUpdate(req.body);
     else if (type === 'classroom') result = validateClassroom(req.body);
     else if (type === 'classroomUpdate')
       result = validateClassroomUpdate(req.body);
     else if (type === 'enrollment') result = validateEnrollment(req.body);
     else if (type === 'enrollmentUpdate')
       result = validateEnrollmentUpdate(req.body);
+    else if (type === 'classroomEnrollment')
+      result = validateClassroomEnrollment(req.body);
+    else if (type === 'classroomEnrollmentUpdate')
+      result = validateClassroomEnrollmentUpdate(req.body);
     else if (type === 'yearGroup') result = validateYearGroup(req.body);
     else if (type === 'yearGroupUpdate')
       result = validateYearGroupUpdate(req.body);

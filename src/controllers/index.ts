@@ -7,6 +7,7 @@ import {YearGroupController} from './YearGroupController';
 import {ClassroomController} from './ClassroomController';
 import {EnrollmentController} from './EnrollmentController';
 import {TranscriptController} from './TranscriptController';
+import {ClassroomEnrollmentController} from './ClassroomEnrollmentController';
 
 export {
   AuthenticationController,
@@ -18,4 +19,5 @@ export {
   ClassroomController,
   EnrollmentController,
   TranscriptController,
+  ClassroomEnrollmentController,
 };

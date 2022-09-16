@@ -9,6 +9,8 @@ import {YearGroupService} from './YearGroupService';
 import {ClassroomService} from './ClassroomService';
 import {EnrollmentService} from './EnrollmentService';
 import {TranscriptService} from './TranscriptService';
+import {ClassroomEnrollmentService} from './ClassroomEnrollmentService';
+import {BehaviourService} from './BehaviourService';
 
 export {
   MongoDbConnection,
@@ -22,4 +24,6 @@ export {
   ClassroomService,
   EnrollmentService,
   TranscriptService,
+  ClassroomEnrollmentService,
+  BehaviourService,
 };

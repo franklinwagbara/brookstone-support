@@ -8,6 +8,7 @@ const StudentSchema = new Schema<IStudent>(
     other_names: {type: String, required: false},
     gender: {type: String, required: true},
     session: {type: Schema.Types.ObjectId, ref: 'Session'},
+    classroom: {type: Schema.Types.ObjectId, ref: 'Classroom'},
     year_group: {type: Schema.Types.ObjectId, ref: 'YearGroup'},
     dob: {type: Date, required: false},
     photo: {type: String, required: false},
