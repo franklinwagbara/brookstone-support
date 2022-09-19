@@ -11,6 +11,8 @@ import {EnrollmentService} from './EnrollmentService';
 import {TranscriptService} from './TranscriptService';
 import {ClassroomEnrollmentService} from './ClassroomEnrollmentService';
 import {BehaviourService} from './BehaviourService';
+import {BoardingHouseService} from './BoardingHouseService';
+import {BoardingEnrollmentService} from './BoardingEnrollmentService';
 
 export {
   MongoDbConnection,
@@ -26,4 +28,6 @@ export {
   TranscriptService,
   ClassroomEnrollmentService,
   BehaviourService,
+  BoardingHouseService,
+  BoardingEnrollmentService,
 };

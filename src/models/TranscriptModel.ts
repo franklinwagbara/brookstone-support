@@ -18,6 +18,7 @@ const TranscriptSchema = new Schema<ITranscript>({
   week_6: {type: Number, required: false},
   week_7: {type: Number, required: false},
   week_8: {type: Number, required: false},
+  week_9: {type: Number, required: false},
   ca_2: {type: Number, required: false},
   final_exam: {type: Number, required: false},
   total: {type: Number, required: false},

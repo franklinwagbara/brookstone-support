@@ -4,6 +4,7 @@ import {IBehaviour} from '../interfaces';
 const BehaviourSchema = new Schema<IBehaviour>({
   student: {type: Schema.Types.ObjectId, ref: 'Student'},
   session: {type: Schema.Types.ObjectId, ref: 'Session'},
+  week: {type: String, required: false},
   active_participation_and_composure_during_lessons: {
     type: Number,
     required: false,

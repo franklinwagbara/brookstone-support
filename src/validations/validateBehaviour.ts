@@ -5,6 +5,7 @@ export const validateBehaviour = (classroomEnrollment: IBehaviour) => {
   const schema = Joi.object<IBehaviour>({
     student: Joi.string().required(),
     session: Joi.string().required(),
+    week: Joi.string(),
     active_participation_and_composure_during_lessons: Joi.string().allow(''),
     ownership_of_learning: Joi.string().allow(''),
     punctuality_and_attendance_to_lessons: Joi.string().allow(''),

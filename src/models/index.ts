@@ -8,6 +8,8 @@ import {EnrollmentModel} from './Enrollment';
 import {YearGroupModel} from './YearGroupModel';
 import {ClassroomEnrollmentModel} from './ClassroomEnrollmentModel';
 import {BehaviourModel} from './BehaviourModel';
+import {BoardingHouseModel} from './BoardingHouseModel';
+import {BoardingEnrollmentModel} from './BoardingEnrollmentModel';
 
 export {
   UserModel,
@@ -20,4 +22,6 @@ export {
   YearGroupModel,
   ClassroomEnrollmentModel,
   BehaviourModel,
+  BoardingHouseModel,
+  BoardingEnrollmentModel,
 };

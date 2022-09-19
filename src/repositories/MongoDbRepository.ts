@@ -57,6 +57,16 @@ export class MongoDbRepository<T> implements IRepository<T> {
         .find(query as FilterQuery<string>)
         .populate(['student', 'session'])
         .exec();
+    } else if (modelName === 'BoardingHouse') {
+      result.data = await this._model
+        .find(query as FilterQuery<string>)
+        .populate(['boarding_parent', 'students', 'session', 'year_group'])
+        .exec();
+    } else if (modelName === 'BoardingEnrollment') {
+      result.data = await this._model
+        .find(query as FilterQuery<string>)
+        .populate(['student', 'session', 'boarding_house'])
+        .exec();
     } else result.data = await this._model.find(query as FilterQuery<string>);
 
     result.status = 200;
@@ -108,6 +118,16 @@ export class MongoDbRepository<T> implements IRepository<T> {
       result.data = (await this._model
         .findOne(query as FilterQuery<string>)
         .populate(['student', 'session', 'session'])
+        .exec()) as T;
+    } else if (modelName === 'BoardingHouse') {
+      result.data = (await this._model
+        .findOne(query as FilterQuery<string>)
+        .populate(['boarding_parent', 'session', 'year_group'])
+        .exec()) as T;
+    } else if (modelName === 'BoardingEnrollment') {
+      result.data = (await this._model
+        .findOne(query as FilterQuery<string>)
+        .populate(['student', 'session', 'boarding_parent'])
         .exec()) as T;
     } else
       result.data = await this._model.findOne(query as FilterQuery<string>);

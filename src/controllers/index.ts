@@ -8,6 +8,9 @@ import {ClassroomController} from './ClassroomController';
 import {EnrollmentController} from './EnrollmentController';
 import {TranscriptController} from './TranscriptController';
 import {ClassroomEnrollmentController} from './ClassroomEnrollmentController';
+import {BehaviourController} from './BehaviourController';
+import {BoardingHouseController} from './BoardingHouseController';
+import {BoardingEnrollmentController} from './BoardingEnrollmentController';
 
 export {
   AuthenticationController,
@@ -20,4 +23,7 @@ export {
   EnrollmentController,
   TranscriptController,
   ClassroomEnrollmentController,
+  BehaviourController,
+  BoardingHouseController,
+  BoardingEnrollmentController,
 };

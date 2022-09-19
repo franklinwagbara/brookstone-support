@@ -20,6 +20,10 @@ import {validateClassroomEnrollment} from './validateClassroomEnrollment';
 import {validateClassroomEnrollmentUpdate} from './validateClassroomEnrollmentUpdate';
 import {validateBehaviourUpdate} from './validateBehaviourUpdate';
 import {validateBehaviour} from './validateBehaviour';
+import {validateBoardingHouse} from './validateBoardingHouse';
+import {validateBoardingHouseUpdate} from './validateBoardingHouseUpdate';
+import {validateBoardingEnrollment} from './validateBoardingEnrollment';
+import {validateBoardingEnrollmentUpdate} from './validateBoardingEnrollmentUpdate';
 
 export {
   validateLogin,
@@ -43,4 +47,9 @@ export {
   validateClassroomEnrollment,
   validateClassroomEnrollmentUpdate,
   validateBehaviour,
+  validateBehaviourUpdate,
+  validateBoardingHouse,
+  validateBoardingHouseUpdate,
+  validateBoardingEnrollment,
+  validateBoardingEnrollmentUpdate,
 };

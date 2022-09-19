@@ -19,6 +19,7 @@ export const validateTranscript = (transcript: ITranscript) => {
     week_6: Joi.number(),
     week_7: Joi.number(),
     week_8: Joi.number(),
+    week_9: Joi.number(),
     ca_2: Joi.number(),
     final_exam: Joi.number(),
     total: Joi.number(),

@@ -25,6 +25,10 @@ import {
   validateClassroomEnrollment,
   validateClassroomEnrollmentUpdate,
   validateBehaviour,
+  validateBoardingHouse,
+  validateBoardingHouseUpdate,
+  validateBoardingEnrollment,
+  validateBoardingEnrollmentUpdate,
 } from '../validations';
 import {validateBehaviourUpdate} from '../validations/validateBehaviourUpdate';
 
@@ -57,6 +61,13 @@ export const validationMiddleware = (type: string) => {
       result = validateClassroomEnrollment(req.body);
     else if (type === 'classroomEnrollmentUpdate')
       result = validateClassroomEnrollmentUpdate(req.body);
+    else if (type === 'boardingHouse') result = validateBoardingHouse(req.body);
+    else if (type === 'boardingHouseUpdate')
+      result = validateBoardingHouseUpdate(req.body);
+    else if (type === 'boardingEnrollment')
+      result = validateBoardingEnrollment(req.body);
+    else if (type === 'boardingEnrollmentUpdate')
+      result = validateBoardingEnrollmentUpdate(req.body);
     else if (type === 'yearGroup') result = validateYearGroup(req.body);
     else if (type === 'yearGroupUpdate')
       result = validateYearGroupUpdate(req.body);

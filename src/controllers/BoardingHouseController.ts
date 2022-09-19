@@ -4,22 +4,22 @@ import {
   IQuery,
   IRequest,
   IResponse,
-  IBehaviour,
+  IBoardingHouse,
 } from '../interfaces';
-import {BehaviourService} from '../services';
+import {BoardingHouseService} from '../services';
 import {validationMiddleware} from '../middlewares';
 import {DoesNotExistException} from '../exceptions';
 import _ from 'lodash';
 
-export class BehaviourController implements IController<IBehaviour> {
+export class BoardingHouseController implements IController<IBoardingHouse> {
   private readonly _router: Router;
   private readonly _path: string;
-  private readonly _behaviourService: BehaviourService;
+  private readonly _boardingHouseService: BoardingHouseService;
 
   constructor(path?: string) {
     this._router = express.Router();
-    this._path = path ?? '/behaviour';
-    this._behaviourService = new BehaviourService();
+    this._path = path ?? '/boardinghouse';
+    this._boardingHouseService = new BoardingHouseService();
 
     this.initializeRoutes();
   }
@@ -28,40 +28,40 @@ export class BehaviourController implements IController<IBehaviour> {
     this._router
 
       /**
-       * @route  GET /api/behaviour
-       * @desc   return a list of behaviours
+       * @route  GET /api/boardinghouse
+       * @desc   return a list of boardinghouses
        * @access private
        */
       .get(`${this._path}`, this.getMany)
 
       /**
-       * @route  GET /api/behaviour/id
-       * @desc   returns a single behaviour
+       * @route  GET /api/boardinghouse/id
+       * @desc   returns a single boardinghouse
        * @access private
        */
       .get(`${this._path}/:id`, this.getOne)
 
       /**
-       * @route  POST /api/behaviour
-       * @desc   creates a behaviour
+       * @route  POST /api/boardinghouse
+       * @desc   creates a boardinghouse
        * @access private
        */
-      .post(`${this._path}`, validationMiddleware('behaviour'), this.save)
+      .post(`${this._path}`, validationMiddleware('boardingHouse'), this.save)
 
       /**
-       * @route  PUT /api/behaviour/id
-       * @desc   updates a single behaviour's record
+       * @route  PUT /api/boardinghouse/id
+       * @desc   updates a single boardinghouse's record
        * @access private
        */
       .put(
         `${this._path}/:id`,
-        validationMiddleware('behaviourUpdate'),
+        validationMiddleware('boardingHouseUpdate'),
         this.update
       )
 
       /**
-       * @route  DELETE /api/behaviour/id
-       * @desc   deletes a single behaviour's record
+       * @route  DELETE /api/boardinghouse/id
+       * @desc   deletes a single boardinghouse's record
        * @access private
        */
       .delete(`${this._path}/:id`, this.delete);
@@ -77,8 +77,15 @@ export class BehaviourController implements IController<IBehaviour> {
     next: NextFunction
   ): Promise<void | IResponse> => {
     try {
-      const query = _.pick(req.query, ['student', 'session']) as IQuery;
-      const queryResult = await this._behaviourService.getMany(query);
+      const query = _.pick(req.query, [
+        'name',
+        'boarding_parent',
+        'students',
+        'session',
+        'year_group',
+        'section',
+      ]) as IQuery;
+      const queryResult = await this._boardingHouseService.getMany(query);
 
       //cache result
       //await cachedQuery(req.originalUrl, queryResult);
@@ -97,7 +104,7 @@ export class BehaviourController implements IController<IBehaviour> {
   ): Promise<void | IResponse> => {
     try {
       const query: IQuery = {_id: req.params.id};
-      const queryResult = await this._behaviourService.getOne(query);
+      const queryResult = await this._boardingHouseService.getOne(query);
 
       //cache result
       //await cachedQuery(req.originalUrl, queryResult);
@@ -114,7 +121,7 @@ export class BehaviourController implements IController<IBehaviour> {
     next: NextFunction
   ): Promise<void | IResponse> => {
     try {
-      const queryResult = await this._behaviourService.save(req.body);
+      const queryResult = await this._boardingHouseService.save(req.body);
 
       //flush cache after update: simplistic implementation, can be improved with more time
       //flushCache();
@@ -135,12 +142,12 @@ export class BehaviourController implements IController<IBehaviour> {
       const _id = req.params.id as string;
       const query = {_id} as IQuery;
 
-      if (!(await this._behaviourService.isExist(query)))
+      if (!(await this._boardingHouseService.isExist(query)))
         throw new DoesNotExistException(
-          'Enrollment does not exist in database.'
+          'Boarding house does not exist in database.'
         );
 
-      const queryResult = await this._behaviourService.update(
+      const queryResult = await this._boardingHouseService.update(
         {_id} as IQuery,
         req.body
       );
@@ -164,12 +171,12 @@ export class BehaviourController implements IController<IBehaviour> {
       const _id = req.params.id as string;
       const query = {_id} as IQuery;
 
-      if (!(await this._behaviourService.isExist(query)))
+      if (!(await this._boardingHouseService.isExist(query)))
         throw new DoesNotExistException(
-          'Enrollment does not exist in database.'
+          'Boarding house does not exist in database.'
         );
 
-      const queryResult = await this._behaviourService.delete({
+      const queryResult = await this._boardingHouseService.delete({
         _id,
       } as IQuery);
 

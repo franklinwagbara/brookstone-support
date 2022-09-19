@@ -1,10 +1,10 @@
 import {Schema, model} from 'mongoose';
-import {IClassroomEnrollment} from '../interfaces/IClassroomEnrollment';
+import {IBoardingEnrollment} from '../interfaces/';
 
-const ClassroomEnrollmentSchema = new Schema<IClassroomEnrollment>({
+const BoardingEnrollmentSchema = new Schema<IBoardingEnrollment>({
   student: {type: Schema.Types.ObjectId, ref: 'Student'},
   session: {type: Schema.Types.ObjectId, ref: 'Session'},
-  classroom: {type: Schema.Types.ObjectId, ref: 'Classroom'},
+  boarding_house: {type: Schema.Types.ObjectId, ref: 'Classroom'},
   week_1_comment: {type: String, required: false},
   week_2_comment: {type: String, required: false},
   week_3_comment: {type: String, required: false},
@@ -18,7 +18,7 @@ const ClassroomEnrollmentSchema = new Schema<IClassroomEnrollment>({
   end_of_term_comment: {type: String, required: false},
 });
 
-export const ClassroomEnrollmentModel = model<IClassroomEnrollment>(
-  'ClassroomEnrollment',
-  ClassroomEnrollmentSchema
+export const BoardingEnrollmentModel = model<IBoardingEnrollment>(
+  'BoardingEnrollment',
+  BoardingEnrollmentSchema
 );

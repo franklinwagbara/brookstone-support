@@ -8,7 +8,7 @@ export const errorHandlingMiddleware = (
   res: IResponse,
   next: NextFunction
 ) => {
-  res.status(exception.status).send({
+  res.status(exception.status || 500).send({
     data: null,
     error: exception.message,
     status: exception.status,

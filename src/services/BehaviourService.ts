@@ -35,6 +35,7 @@ export class BehaviourService implements IService<IBehaviour> {
       await this.isExist({
         student: data.student.toString(),
         session: data.session.toString(),
+        week: data.week.toString(),
       })
     )
       throw new AlreadyExistException('Student already exists');

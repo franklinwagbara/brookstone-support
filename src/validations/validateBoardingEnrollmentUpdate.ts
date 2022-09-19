@@ -1,13 +1,13 @@
 import Joi from 'joi';
-import {IClassroomEnrollment} from '../interfaces';
+import {IBoardingEnrollment} from '../interfaces';
 
-export const validateClassroomEnrollmentUpdate = (
-  classroomEnrollment: IClassroomEnrollment
+export const validateBoardingEnrollmentUpdate = (
+  boardingEnrollment: IBoardingEnrollment
 ) => {
-  const schema = Joi.object<IClassroomEnrollment>({
+  const schema = Joi.object<IBoardingEnrollment>({
     student: Joi.string().required(),
     session: Joi.string().required(),
-    classroom: Joi.string().required(),
+    boarding_house: Joi.string().required(),
     week_1_comment: Joi.string().allow(''),
     week_2_comment: Joi.string().allow(''),
     week_3_comment: Joi.string().allow(''),
@@ -21,5 +21,5 @@ export const validateClassroomEnrollmentUpdate = (
     end_of_term_comment: Joi.string().allow(''),
   });
 
-  return schema.validate(classroomEnrollment, {abortEarly: false});
+  return schema.validate(boardingEnrollment, {abortEarly: false});
 };
