@@ -127,7 +127,7 @@ export class MongoDbRepository<T> implements IRepository<T> {
     } else if (modelName === 'BoardingEnrollment') {
       result.data = (await this._model
         .findOne(query as FilterQuery<string>)
-        .populate(['student', 'session', 'boarding_parent'])
+        .populate(['student', 'session', 'boarding_house'])
         .exec()) as T;
     } else
       result.data = await this._model.findOne(query as FilterQuery<string>);

@@ -35,6 +35,11 @@ const BehaviourSchema = new Schema<IBehaviour>({
     required: false,
     default: 0,
   },
+  cooperation_with_support_teachers: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
   cooperation_with_boarding_parents: {
     type: Number,
     required: false,

@@ -4,7 +4,7 @@ import {IBoardingEnrollment} from '../interfaces/';
 const BoardingEnrollmentSchema = new Schema<IBoardingEnrollment>({
   student: {type: Schema.Types.ObjectId, ref: 'Student'},
   session: {type: Schema.Types.ObjectId, ref: 'Session'},
-  boarding_house: {type: Schema.Types.ObjectId, ref: 'Classroom'},
+  boarding_house: {type: Schema.Types.ObjectId, ref: 'BoardingHouse'},
   week_1_comment: {type: String, required: false},
   week_2_comment: {type: String, required: false},
   week_3_comment: {type: String, required: false},
